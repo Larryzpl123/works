@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Larry (Peilin) Zhong</title>
+<style>
+  :root{
+    --bg:#0f1115; --panel:#161922; --ink:#e8eaf0; --mut:#9aa2b1;
+    --line:#252a36; --accent:#6ea8fe; --accent2:#7ee2b8;
+    --mono:'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;background:var(--bg);color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.55;-webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:880px;margin:0 auto;padding:0 22px}
+  a{color:var(--accent);text-decoration:none}
+  a:hover{text-decoration:underline}
+
+  /* HERO — the 10-second win */
+  header{padding:70px 0 34px}
+  .tag{font-family:var(--mono);font-size:.8rem;color:var(--accent2);letter-spacing:.5px;margin-bottom:14px}
+  h1{font-size:2.5rem;line-height:1.1;margin:0 0 14px;letter-spacing:-.5px}
+  .lede{font-size:1.22rem;color:var(--ink);max-width:42ch;margin:0 0 10px}
+  .blurb{color:var(--mut);max-width:62ch;margin:0 0 22px}
+  .links{display:flex;flex-wrap:wrap;gap:8px 18px;font-size:.92rem;font-family:var(--mono)}
+
+  /* HIGHLIGHTS strip */
+  .highs{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:14px 0 6px}
+  .high{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:12px 14px;font-size:.95rem}
+  .high b{color:var(--accent2);font-weight:600}
+
+  section{padding:34px 0;border-top:1px solid var(--line)}
+  h2{font-size:.82rem;text-transform:uppercase;letter-spacing:2px;color:var(--mut);
+     font-family:var(--mono);margin:0 0 20px;font-weight:600}
+
+  /* PROJECTS grid — the 30-second skim */
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:18px;
+        display:flex;flex-direction:column;gap:8px;transition:border-color .15s,transform .15s}
+  .card:hover{border-color:var(--accent);transform:translateY(-2px)}
+  .card h3{margin:0;font-size:1.06rem}
+  .card p{margin:0;color:var(--mut);font-size:.93rem}
+  .card .meta{font-family:var(--mono);font-size:.76rem;color:var(--accent2);margin-top:auto}
+
+  /* WRITING list */
+  .rows{display:flex;flex-direction:column;gap:2px}
+  .row{padding:13px 4px;border-bottom:1px solid var(--line);display:flex;flex-direction:column;gap:3px}
+  .row:last-child{border-bottom:none}
+  .row .t{font-size:1.02rem;font-weight:600}
+  .row .w{color:var(--mut);font-size:.92rem}
+
+  /* AWARDS chips */
+  .chips{display:flex;flex-wrap:wrap;gap:8px}
+  .chip{background:var(--panel);border:1px solid var(--line);border-radius:20px;
+        padding:6px 13px;font-size:.86rem;color:var(--mut)}
+
+  footer{padding:40px 0 60px;color:var(--mut);font-size:.85rem;font-family:var(--mono)}
+  @media(max-width:640px){
+    h1{font-size:2rem}.grid,.highs{grid-template-columns:1fr}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="tag" id="tagline"></div>
+    <h1 id="name"></h1>
+    <p class="lede" id="lede"></p>
+    <p class="blurb" id="blurb"></p>
+    <div class="links" id="links"></div>
+    <div class="highs" id="highs"></div>
+  </header>
+
+  <section id="projects-sec">
+    <h2>Projects</h2>
+    <div class="grid" id="projects"></div>
+  </section>
+
+  <section id="writing-sec">
+    <h2>Writing</h2>
+    <div class="rows" id="writing"></div>
+  </section>
+
+  <section id="awards-sec">
+    <h2>Selected Awards</h2>
+    <div class="chips" id="awards"></div>
+  </section>
+
+  <footer id="footer"></footer>
+</div>
+
+<script src="content.js"></script>
+<script>
+// ---- tiny parser for the friendly text format in content.js ----
+function parse(raw){
+  const out={profile:{},highlights:[],projects:[],writing:[],awards:[]};
+  const sections={};
+  let cur=null;
+  raw.split('\n').forEach(line=>{
+    const m=line.match(/^===\s*(.+?)\s*===$/);
+    if(m){cur=m[1].toUpperCase();sections[cur]=[];return;}
+    if(cur) sections[cur].push(line);
+  });
+  // PROFILE: Field: value
+  (sections['PROFILE']||[]).forEach(l=>{
+    const m=l.match(/^([A-Za-z ]+):\s*(.*)$/);
+    if(m) out.profile[m[1].trim().toLowerCase()]=m[2].trim();
+  });
+  // HIGHLIGHTS: one per non-empty line
+  (sections['HIGHLIGHTS']||[]).forEach(l=>{if(l.trim())out.highlights.push(l.trim());});
+  // block-based (split on lines of ---)
+  function blocks(name){
+    const lines=sections[name]||[];const res=[];let b={};
+    lines.forEach(l=>{
+      if(l.trim()==='---'){if(Object.keys(b).length){res.push(b);}b={};return;}
+      const m=l.match(/^([A-Za-z ]+):\s*(.*)$/);
+      if(m)b[m[1].trim().toLowerCase()]=m[2].trim();
+    });
+    if(Object.keys(b).length)res.push(b);
+    return res;
+  }
+  out.projects=blocks('PROJECTS');
+  out.writing=blocks('WRITING');
+  (sections['AWARDS']||[]).forEach(l=>{if(l.trim())out.awards.push(l.trim());});
+  return out;
+}
+
+function esc(s){return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function el(id){return document.getElementById(id);}
+
+function render(d){
+  const p=d.profile;
+  el('tagline').textContent=p.tagline?'':'';
+  el('name').textContent=p.name||'';
+  el('lede').textContent=p.tagline||'';
+  el('blurb').textContent=p.blurb||'';
+  // links
+  const linkOrder=[['github','GitHub'],['steam workshop','Steam Workshop'],['linkedin','LinkedIn'],['email','Email']];
+  el('links').innerHTML=linkOrder.filter(([k])=>p[k]).map(([k,label])=>{
+    const v=p[k];const href=k==='email'?'mailto:'+v:v;
+    return '<a href="'+esc(href)+'" target="_blank" rel="noopener">'+label+'</a>';
+  }).join('');
+  // highlights
+  el('highs').innerHTML=d.highlights.map(h=>{
+    const parts=h.split(/\s[—-]\s/);
+    return '<div class="high"><b>'+esc(parts[0])+'</b>'+(parts[1]?' — '+esc(parts[1]):'')+'</div>';
+  }).join('');
+  // projects
+  el('projects').innerHTML=d.projects.map(pr=>{
+    const inner='<h3>'+esc(pr.title)+'</h3>'+
+      (pr.why?'<p>'+esc(pr.why)+'</p>':'')+
+      (pr.tags?'<div class="meta">'+esc(pr.tags)+'</div>':'');
+    return pr.link
+      ? '<a class="card" href="'+esc(pr.link)+'" target="_blank" rel="noopener">'+inner+'</a>'
+      : '<div class="card">'+inner+'</div>';
+  }).join('');
+  // writing
+  el('writing').innerHTML=d.writing.map(w=>{
+    const t=w.link?'<a href="'+esc(w.link)+'" target="_blank" rel="noopener">'+esc(w.title)+'</a>':esc(w.title);
+    return '<div class="row"><div class="t">'+t+'</div>'+(w.why?'<div class="w">'+esc(w.why)+'</div>':'')+'</div>';
+  }).join('');
+  if(!d.writing.length) el('writing-sec').style.display='none';
+  // awards
+  el('awards').innerHTML=d.awards.map(a=>'<span class="chip">'+esc(a)+'</span>').join('');
+  if(!d.awards.length) el('awards-sec').style.display='none';
+  // footer
+  el('footer').textContent='© '+new Date().getFullYear()+'  '+(p.name||'');
+}
+
+try{
+  if(typeof window.CONTENT==='string'){ render(parse(window.CONTENT)); }
+  else{ el('name').textContent='content.js not found'; }
+}catch(e){ el('name').textContent='Error reading content.js'; console.error(e); }
+</script>
+</body>
+</html>
