@@ -64,13 +64,21 @@ Title: The Secret Internet — From Military Weapon to World Wide Web
 Why: A history project on how the internet grew out of Cold War military research.
 Link: https://larryzpl123.github.io/The-Secret-Internet-From-Military-Weapon-to-World-Wide-Web/
 ---
-Title: Fear Itself — The Election of 1940 (FDR)
-Why: Semester I final exam project.
-Link:
+Title: Fear Itself — The Election of 1940
+Why: My Semester I final — a set of open letters written in the voice of John Maynard Keynes, debating the New Deal and the 1940 election.
+Link: https://larryzpl123.github.io/works/jmk.pdf
 ---
-Title: John Locke Essay — History (Shortlisted 2025)
-Why: Shortlisted in the John Locke Institute essay competition.
-Link:
+Title: Beyond Shame and Pride: A Balanced Approach to National History
+Why: John Locke Essay Competition — History, 2025 (shortlisted). On how nations should reckon with their past beyond guilt or pride.
+Link: https://larryzpl123.github.io/works/history-2025.pdf
+---
+Title: The Most Famous Stranger in the World
+Why: John Locke Essay Competition — History, 2026. On the Che Guevara photograph and what an icon really reflects.
+Link: https://larryzpl123.github.io/works/history-2026.pdf
+---
+Title: The Thermometer That Changes the Weather
+Why: John Locke Essay Competition — Psychology, 2026. On whether mental illness is over-diagnosed or finally better recognised.
+Link: https://larryzpl123.github.io/works/psych-2026.pdf
 ---
 Title: Brain-Machine Interface paper (coming soon)
 Why: Currently writing — my first real research paper on BCI.
