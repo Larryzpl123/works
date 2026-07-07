@@ -9,6 +9,7 @@ window.CONTENT = `
 
 === PROFILE ===
 Name: Larry (Peilin) Zhong
+Kicker: Builder · Boundless · Convergent
 Tagline: I build things at the intersection of neuroscience, computing, and history.
 Blurb: Class of 2027 at Shady Side Academy, boarding from Beijing. I don't just learn things — I make things from them. Curious about the brain, brain-machine interfaces, and how systems (and civilizations) rise, fall, and can be redesigned.
 Email: lzhonng@gmail.com
@@ -38,6 +39,11 @@ Title: Civilization VI Mods
 Why: I taught myself Lua, SQL, and XML to build original civilizations — each one part algorithm, part history research, part storytelling. Published to the Steam Workshop.
 Tags: Lua · Game design · History
 Link: https://steamcommunity.com/
+---
+Title: The Cruelest Years — WWII Strategy Board Game
+Why: I designed and led the build of a complex WWII wargame from scratch — 3D-printed units, a full rulebook and DLC, six playtests, and 8+ iterations to keep it deep but approachable. History, systems design, and relentless revision in one object.
+Tags: Game design · 3D printing · History
+Link: https://larryzpl123.github.io/The-Cruelest-Years/
 ---
 Title: Smart Schedule
 Why: SSA's rotating Day 1–8 schedule is confusing, so I built a web app that folds it into one clean view.
